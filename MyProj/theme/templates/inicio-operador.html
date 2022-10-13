@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    </head>
+    <body class="text-center">
+        <div class="container">
+            <div class="row">
+                <h2>Sistema de <br> Monitoramento de Voos</h2>
+            <ul class="ds-btn">
+                <li>
+                        <a class="btn btn-lg " href="http://localhost:8000/inicio-operador">
+                     <i class="glyphicon glyphicon-link pull-left"></i><span>Usuário:<br><small>Operador de voos</small></span></a> 
+                       
+                   </li>
+                <li>
+                     <a class="btn btn-lg btn-success " href="http://localhost:8000/crud">
+                 <i class="glyphicon glyphicon-dashboard pull-left"></i><span>CRUD<br><small>Tela de CRUD</small></span></a> 
+                    
+                </li>
+                <li>
+                     <a class="btn btn-lg btn-danger" href="http://localhost:8000/monitoracao-status">
+                 <i class="glyphicon glyphicon-tasks pull-left"></i><span>Monitoração Status<br><small>Tela de atualização da <br> monitoração de status</small></span></a> 
+                    
+                </li>
+            </ul>
+            
+            </div>
+        </div>
+    </body>
+</html>
