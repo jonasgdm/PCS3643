@@ -1,3 +1,4 @@
+<!-- https://learndjango.com/tutorials/django-login-and-logout-tutorial -->
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -17,12 +18,16 @@
               </div> -->
           
               <!-- Login Form -->
-              <form>
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-                <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-                <input type="submit" class="fadeIn fourth" value="Log In" onclick="">
-                <!-- https://stackoverflow.com/questions/61545090/javascript-login-form-redirect -->
-              </form>
+              <!-- <form> -->
+                <!-- <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+                <input type="text" id="password" class="fadeIn third" name="login" placeholder="password"> -->
+                <form method="post">
+                  {% csrf_token %}
+                  {{ form.as_p }}
+                  <button type="submit">Log In</button>
+                  <!-- <input type="submit" class="fadeIn fourth" value="Log In" onclick=""> -->
+                </form>
+              <!-- </form> -->
           
               <!-- Remind Passowrd -->
               <div id="formFooter">

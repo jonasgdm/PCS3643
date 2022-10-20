@@ -12,4 +12,3 @@ class InterfaceMonitoracao:
 class InterfaceRelatorios:
     def __init__(self):
         pass
-    
