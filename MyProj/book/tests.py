@@ -37,7 +37,7 @@ class VooModelTest(TestCase):
         tempo_depois_deatualizar = voo_criado.ultimaAtualizacao
         self.assertEqual(voo_criado.companhiaAerea, 'LabEngSoftAir')
         self.assertNotEqual(tempo_antes_de_atualizar, tempo_depois_deatualizar)
-    def teste_delecao(self):
-        voo_criado = Voo.objects.first()
-        voo_criado.delete()
-        self.assertIsNone(Voo.objects.first())
+    # def teste_delecao(self):
+    #     voo_criado = Voo.objects.first()
+    #     voo_criado.delete()
+    #     self.assertIsNone(Voo.objects.first())

@@ -14,11 +14,11 @@ class Funcionario(models.Model):
 
 
 class Voo(models.Model):
-    idVoo = models.CharField(primary_key=True, max_length=7)
+    idVoo = models.fields.CharField(primary_key=True, max_length=7)
     companhiaAerea = models.CharField(max_length=20, null=False)
     origem = models.CharField(max_length=20, null=False)
     destino = models.CharField(max_length=20, null=False)
-    partidaPrevista = models.DateTimeField(null=False)
+    partidaPrevista = models.fields.DateTimeField(null=False)
     partidaReal = models.DateTimeField(null=True)
     chegadaPrevista = models.DateTimeField(null=False)
     chegadaReal = models.DateTimeField(null=True)

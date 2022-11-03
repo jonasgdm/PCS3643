@@ -9,7 +9,6 @@ class Funcionario():
     
     def __init__(self):
         pass
-    
     def cadastrar(self):
         pass
     def consultar(self):
@@ -36,8 +35,9 @@ class Voo:
     def __init__(self):
         pass
 
-    def criar(self):
-        pass
+    def criar(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista):
+        Voo.objects.create(idVoo=idVoo, companhiaAerea=companhiaAerea, origem=origem, destino=destino,
+                           partidaPrevista=partidaPrevista, chegadaPrevista=chegadaPrevista)
 
     def consultar(self):
         pass
