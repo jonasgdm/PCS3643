@@ -19,11 +19,17 @@ class Voo(models.Model):
     origem = models.CharField(max_length=20, null=False)
     destino = models.CharField(max_length=20, null=False)
     partidaPrevista = models.fields.DateTimeField(null=False)
-    partidaReal = models.DateTimeField(null=True)
+    partidaReal = models.DateTimeField(null=True, blank=True)
     chegadaPrevista = models.DateTimeField(null=False)
-    chegadaReal = models.DateTimeField(null=True)
-    statusVoo = models.CharField(max_length=100)
-    conexoes = models.CharField(max_length=100)
+    chegadaReal = models.DateTimeField(null=True, blank=True)
+    # TODO: Criar os status de voo pre programados dados pelo enunciado
+    # TODO: Mudar o stutus voo para só permitir os status pré progamados
+    statusVoo = models.CharField(max_length=100, blank=True)
+    # TODO: Trocar o nome da variavel conexoes pra outro nome conforme comentario do prof
+    conexoes = models.CharField(max_length=100, blank=True)
     ultimaAtualizacao= models.DateTimeField(auto_now=True)
     class Meta:
         db_table = 'voos'
+
+    def __str__(self) :
+        return f'{self.idVoo}'

@@ -1,0 +1,21 @@
+<body>
+
+    <nav>
+        <a href="{% url 'crudview' %}">CRUD</a>
+    </nav>
+
+    {% block content %}
+
+    <h1>Lista de Voos (Atualizar dados de Voo)</h1>
+
+    <ul>
+    {% for voo in vooMostrar %}
+        <li>
+            <a href="{% url 'crudupdateview' voo.idVoo %}">{{ voo }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+
+    {% endblock %}
+
+</body>

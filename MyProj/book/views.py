@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 #from book.classes.teste import ContactUsForm
 from book.forms import VooForm
 from book.models import Voo, Funcionario
@@ -14,14 +14,34 @@ def crudview(request):
     return render(request, "crud.html")
     
 def crudcreateview(request):
-    print('The request method is:', request.method)
-    print('The POST data is:', request.POST)
+    #print('The request method is:', request.method)
+    #print('The POST data is:', request.POST)
 
-    form = VooForm()
+    if request.method == 'POST':
+        form = VooForm(request.POST)
+
+        if form.is_valid():
+            voo = form.save()
+
+            return redirect('crud_read_specific_view', voo.idVoo)
+    else:
+        form = VooForm()
+    
     return render(request, "crud-create.html", {'form': form})
     
-def cruddeleteview(request):
-    return render(request, "crud-delete.html")
+def crud_delete_list_view(request):
+    vooMostrar = Voo.objects.all()
+    return render(request, "crud-delete-list.html", {'vooMostrar': vooMostrar})
+
+def cruddeleteview(request, idVoo):
+    voo = Voo.objects.get(idVoo=idVoo)
+
+    if request.method == 'POST':
+        voo.delete()
+
+        return redirect('crud-view')
+
+    return render(request, "crud-delete.html", {'voo': voo})
     
 def crudreadview(request):
     # query = request.GET
@@ -42,8 +62,28 @@ def crudreadview(request):
     vooMostrar = Voo.objects.all()
     return render(request, "crud-read.html", {'vooMostrar': vooMostrar})
 
-def crudupdateview(request):
-    return render(request, "crud-update.html")
+def crud_read_specific_view(request, idVoo):
+    voo = Voo.objects.get(idVoo=idVoo)
+    return render(request, "crud-read-specific.html", {'voo': voo})
+
+def crud_update_list_view(request):
+    vooMostrar = Voo.objects.all()
+    return render(request, "crud-update-list.html", {'vooMostrar': vooMostrar})
+
+def crudupdateview(request, idVoo):
+    voo  = Voo.objects.get(idVoo=idVoo)
+
+    if request.method == 'POST':
+        form = VooForm(request.POST, instance=voo)
+
+        if form.is_valid():
+            voo = form.save()
+
+            return redirect('crud_read_specific_view', voo.idVoo)
+    else:
+        form = VooForm(instance=voo)
+
+    return render(request, "crud-update.html", {'form': form})
 
 def relatorioview(request):
     return render(request, "relatorio.html")

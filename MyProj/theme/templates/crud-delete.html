@@ -1,6 +1,51 @@
-Essa é a pagina do delete
+<body>
 
-<div class="container">
+    <nav>
+        <a href="{% url 'crudview' %}">CRUD</a>
+    </nav>
+
+    {% block content %}
+
+        <h1>Deletar Voo: {{ voo.idVoo }}</h1>
+
+        <p>Detalhes do Voo:</p>
+        <ul>
+            <li>Companhia Aérea: {{ voo.companhiaAerea }}</li>
+            <li>Origem: {{ voo.origem }}</li>
+            <li>Destino: {{ voo.destino }}</li>
+            <li>Decolagem Prevista: {{ voo.partidaPrevista }}</li>
+            {% if voo.partidaReal %}
+            <li>Decolagem Real: {{ voo.partidaReal }}</li>
+            {% endif %}
+            <li>Pouso Previto: {{ voo.chegadaPrevista }}</li>
+            {% if voo.chegadaReal %}
+            <li>Pouso Real: {{ voo.chegadaReal }}</li>
+            {% endif %}
+            {% if voo.statusVoo %}
+            <li>Status do Voo: {{ voo.statusVoo }}</li>
+            {% endif %}
+            {% if voo.conexoes %}
+            <li>Rota: {{ voo.conexoes }}</li>
+            {% endif %}
+            <li>Ultima Atualização: {{ voo.ultimaAtualizacao }}</li>
+        </ul>
+
+        <p>Deseja realmente apagar este Voo?</p>
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Delete">
+        </form>
+        
+            <a href="{% url 'crudreadview' %}">Voltar para lista de voos</a>
+
+    {% endblock %}
+
+</body>
+
+
+
+<!-- Teste de forms 
+    <div class="container">
     <form>
         <div class="form-group">
         <label for="exampleFormControlInput1">Email address</label>
@@ -31,4 +76,4 @@ Essa é a pagina do delete
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
     </form>
-</div>
+</div> -->

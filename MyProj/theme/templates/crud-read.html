@@ -1,11 +1,25 @@
-{% block content %}
+<body>
 
-<h1>OI</h1>
+    <nav>
+        <a href="{% url 'crudview' %}">CRUD</a>
+    </nav>
 
-<ul>
- {% for voo in vooMostrar %}
-  <li>{{ voo }}</li>
- {% endfor %}
-</ul>
+    {% block content %}
 
-{% endblock %}
+    <h1>Lista de Voos</h1>
+
+    <ul>
+    {% for voo in vooMostrar %}
+        <li>
+            <a href="{% url 'crud_read_specific_view' voo.idVoo %}">{{ voo }}</a>
+            - <a href="{% url 'crudupdateview' voo.idVoo %}"><small>[atualizar]</small></a>
+            - <a href="{% url 'cruddeleteview' voo.idVoo %}"><small>[apagar]</small></a>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <a href="{% url 'crudcreateview' %}">Criar novo Voo</a>
+
+    {% endblock %}
+
+</body>

@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,7 +10,7 @@
             <form method="post" novalidate>
                 {% csrf_token %}
                 {{ form }}
-                <!-- <div class="form-group">
+                <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
@@ -23,14 +23,14 @@
                 <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                 <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div> -->
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
 
         
 
-        <!-- <div class="container">
+        <div class="container">
             <form>
                 <div class="form-group">
                     <label for="codigoDoVoo">Código do Voo</label>
@@ -59,8 +59,28 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-        </div> -->
+        </div>
     </body>
-</html>
+</html> -->
 
 <!-- https://openclassrooms.com/en/courses/6967196-create-a-web-application-with-django/7349237-capture-user-input-with-django-forms -->
+
+<body>
+
+    <nav>
+        <a href="{% url 'crudview' %}">CRUD</a>
+    </nav>
+
+    {% block content %}
+
+        <h1>Criar novo Voo</h1>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit">
+        </form>
+
+    {% endblock %}
+
+</body>

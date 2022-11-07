@@ -1,0 +1,38 @@
+<body>
+
+    <nav>
+        <a href="{% url 'crudview' %}">CRUD</a>
+    </nav>
+
+    {% block content %}
+
+    <h2>{{ voo.idVoo }}</h2>
+
+    <ul>
+    <li>Companhia Aérea: {{ voo.companhiaAerea }}</li>
+    <li>Origem: {{ voo.origem }}</li>
+    <li>Destino: {{ voo.destino }}</li>
+    <li>Decolagem Prevista: {{ voo.partidaPrevista }}</li>
+    {% if voo.partidaReal %}
+    <li>Decolagem Real: {{ voo.partidaReal }}</li>
+    {% endif %}
+    <li>Pouso Previto: {{ voo.chegadaPrevista }}</li>
+    {% if voo.chegadaReal %}
+    <li>Pouso Real: {{ voo.chegadaReal }}</li>
+    {% endif %}
+    {% if voo.statusVoo %}
+    <li>Status do Voo: {{ voo.statusVoo }}</li>
+    {% endif %}
+    {% if voo.conexoes %}
+    <li>Rota: {{ voo.conexoes }}</li>
+    {% endif %}
+    <li>Ultima Atualização: {{ voo.ultimaAtualizacao }}</li>
+    </ul>
+
+    <a href="{% url 'crudupdateview' voo.idVoo %}">Atualizar dados</a>
+    <br>
+    <a href="{% url 'crudreadview' %}">Voltar para lista de voos</a>
+
+    {% endblock %}
+
+</body>
