@@ -76,10 +76,18 @@ Os testes de  de unidade podem ser rodados pelo mesmo comando da Aula 6:
 python manage.py test
 ```
 
-Já o conteudo implementado pode ser acessado pela lista [abaixo](#Referências). 
+Já o conteudo implementado pode ser acessado pela lista [abaixo](#Templates), o conteúdo pode ser acessado diretamente pelos links. 
 
-### Templates desenvolvidos
+## Templates
+Pelas telas iniciais, abaixo, é possivel acessar as aplicações:
+
 - `http://localhost:8000/inicio-operador` - Tela inicial para Operador de Voos
+
+- `http://localhost:8000/inicio-monitoracao/` - Tela inicial para Piloto, Funcionário da COmpanhia Aérea e Funcionário da Torre de Controle
+
+- `http://localhost:8000/inicio-gerente/` - Tela inicial para Gerente
+
+A seguir tem-se a lista das telas implementadas:
 
 - `http://localhost:8000/crud` - Tela do CRUD
 
@@ -96,6 +104,22 @@ Já o conteudo implementado pode ser acessado pela lista [abaixo](#Referências)
 - `http://localhost:8000/crud/delete/` - Tela de deletar cadastro do Voo (lista)
 
 - `http://localhost:8000/crud/delete/idVOO` - Tela de deletar cadastro do Voo (especifico para cada código de voo existente substituido em idVOO)
+
+- `http://localhost:8000/relatorio/` - Tela de selecionar os tipos de Relatório
+
+- `http://localhost:8000/relatorio/partidas/` - Tela do relatório pelas partidas
+
+- `http://localhost:8000/relatorio/chegadas/` - Tela do relatório pelas chegadas
+
+- `http://localhost:8000/relatorio/partidas-gerado/` - Tela do relatório gerado
+
+- `http://localhost:8000/relatorio/chegadas-gerado/` - Tela do relatório gerado
+
+- `http://localhost:8000/painel-monitoracao/` - Tela do Painel de Monitoração
+
+- `http://localhost:8000/monitoracao-status/` - Tela de Monitoração de Status
+
+- `http://localhost:8000/monitoracao-status/update/idVOO/` - Tela da Atualização de Status (especifico para cada código de voo existente substituido em idVOO)
 
 ## Projeto da disciplina
 O projeto consiste em um sistema de monitoramento de voos, com funcionalidades como o cadastro e atualização de dados sobre os voos, o monitoramento em tempo real dos mesmos e a geração de relatórios detalhados sobre as viagens [\[1\]](#Referências).
