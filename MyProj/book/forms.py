@@ -16,3 +16,8 @@ class VooForm(forms.ModelForm):
         #     'chegadaPrevista' : forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': ''}),
         #     'conexoes' : forms.Textarea(attrs={'class': 'form-control', 'placeholder': ''})
         # }
+
+class VooStatusForm(forms.ModelForm):
+    class Meta:
+        model = Voo
+        fields = ('statusVoo',)

@@ -14,6 +14,15 @@ class Funcionario(models.Model):
 
 
 class Voo(models.Model):
+    STATUS_CHOICES = (
+        ("Embarcando", "Embarcando"),
+        ("Cancelado", "Cancelado"),
+        ("Programado", "Programado"),
+        ("Taxiando", "Taxiando"),
+        ("Pronto", "Pronto"),
+        ("Autorizado", "Autorizado"),
+        ("Em Voo", "Em Voo"),
+        ("Aterrissado", "Aterrissado"))
     idVoo = models.fields.CharField(primary_key=True, max_length=7)
     companhiaAerea = models.CharField(max_length=20, null=False)
     origem = models.CharField(max_length=20, null=False)
@@ -24,7 +33,7 @@ class Voo(models.Model):
     chegadaReal = models.DateTimeField(null=True, blank=True)
     # TODO: Criar os status de voo pre programados dados pelo enunciado
     # TODO: Mudar o stutus voo para só permitir os status pré progamados
-    statusVoo = models.CharField(max_length=100, blank=True)
+    statusVoo = models.CharField(max_length=20, choices=STATUS_CHOICES, default="1")
     # TODO: Trocar o nome da variavel conexoes pra outro nome conforme comentario do prof
     conexoes = models.CharField(max_length=100, blank=True)
     ultimaAtualizacao= models.DateTimeField(auto_now=True)

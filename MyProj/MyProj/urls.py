@@ -32,8 +32,9 @@ urlpatterns = [
     path('crud/update/<str:idVoo>/', views.crudupdateview, name='crudupdateview'),
     path('relatorio', views.relatorioview),
     path('painel-monitoracao/', views.painelview, name='painelview'),
-    path('monitoracao-status', views.monitoracaoview),
+    path('monitoracao-status/', views.monitoracaoview, name='monitview'),
     path('inicio-operador', views.operadorview),
     path('inicio-gerente', views.gerenteview),
     path('inicio-monitoracao/', views.funcionarioview, name='inicio_monit_view'),
+    path('monitoracao-status/update/<str:idVoo>', views.statusupdateview, name='statusupdateview'),
 ]

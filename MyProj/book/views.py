@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 #from book.classes.teste import ContactUsForm
-from book.forms import VooForm
+from book.forms import VooForm, VooStatusForm
 from book.models import Voo, Funcionario
 
 # Create your views here.
@@ -85,6 +85,20 @@ def crudupdateview(request, idVoo):
 
     return render(request, "crud-update.html", {'form': form})
 
+def statusupdateview(request, idVoo):
+    voo = Voo.objects.get(idVoo=idVoo)
+
+    if request.method == 'POST':
+        form = VooStatusForm(request.POST, instance=voo)
+        if form.is_valid():
+            voo = form.save()
+
+            return redirect('monitview')
+    else:
+        form = VooStatusForm(instance=voo)
+    
+    return render(request, "status-update.html", {'form': form})
+
 def relatorioview(request):
     return render(request, "relatorio.html")
     
@@ -93,7 +107,8 @@ def painelview(request):
     return render(request, "painel.html", {'vooMostrar': vooMostrar})
 
 def monitoracaoview(request):
-    return render(request, "monitoracao-status.html")
+    vooMostrar = Voo.objects.all()
+    return render(request, "monitoracao-status.html", {'vooMostrar': vooMostrar})
 
 def operadorview(request):
     return render(request, "inicio-operador.html")
