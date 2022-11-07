@@ -69,6 +69,15 @@ Para rodar os testes, execute o seguinte comando:
 python manage.py test
 ```
 
+### Atividade das aulas 8 e 9
+Os testes de  de unidade podem ser rodados pelo mesmo comando da Aula 6:
+
+```
+python manage.py test
+```
+
+Já o conteudo implementado pode ser acessado pela lista [abaixo](#Referências). 
+
 ### Templates desenvolvidos
 - `http://localhost:8000/inicio-operador` - Tela inicial para Operador de Voos
 
