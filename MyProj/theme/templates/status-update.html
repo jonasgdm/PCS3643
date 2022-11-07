@@ -1,0 +1,19 @@
+<body>
+
+    <nav>
+        <a href="{% url 'monitview' %}">Retornar</a>
+    </nav>
+
+    {% block content %}
+
+        <h1>Atualizar Status do Voo</h1>
+
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit">
+        </form>
+
+    {% endblock %}
+
+</body>

@@ -31,9 +31,7 @@ class Voo(models.Model):
     partidaReal = models.DateTimeField(null=True, blank=True)
     chegadaPrevista = models.DateTimeField(null=False)
     chegadaReal = models.DateTimeField(null=True, blank=True)
-    # TODO: Criar os status de voo pre programados dados pelo enunciado
-    # TODO: Mudar o stutus voo para só permitir os status pré progamados
-    statusVoo = models.CharField(max_length=20, choices=STATUS_CHOICES, default="1")
+    statusVoo = models.CharField(max_length=20, choices=STATUS_CHOICES)
     # TODO: Trocar o nome da variavel conexoes pra outro nome conforme comentario do prof
     conexoes = models.CharField(max_length=100, blank=True)
     ultimaAtualizacao= models.DateTimeField(auto_now=True)

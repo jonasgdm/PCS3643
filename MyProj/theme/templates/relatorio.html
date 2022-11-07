@@ -1,1 +1,33 @@
- Tela do Relatório
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    </head>
+    <body class="text-center">
+        <div class="container">
+            <div class="row">
+                <h2>Sistema de <br> Monitoramento de Voos</h2>
+                <ul class="ds-btn">
+                    <li>
+                        <a class="btn btn-lg btn-info" href="{% url 'inicio_gerente_view' %}">
+                        <i class="glyphicon glyphicon-link pull-left"></i><span>Início</span></a>
+                    </li>
+                </ul>
+            </div>
+            <h3>Gerar relatório de:</h3>
+            <div>
+                <div>
+                    <a class="btn btn-lg btn-success" href="{% url 'partidasview' %}">
+                    <i class="glyphicon glyphicon-list pull-left"></i><span>Partidas</span></a>
+                </div>
+                <div>
+                    <a class="btn btn-lg btn-warning" href="{% url 'chegadasview' %}">
+                    <i class="glyphicon glyphicon-list pull-left"></i><span>Chegadas</span></a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

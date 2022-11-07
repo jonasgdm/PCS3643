@@ -1,0 +1,24 @@
+<body>
+
+    <nav>
+        <a href="{% url 'relatorioview' %}">Retornar</a>
+    </nav>
+
+    {% block content %}
+
+    <h2>{{vooMostrar.length}} partidas no intervalo:</h2>
+
+    <ul>
+        {% for voo in vooMostrar %}
+        <li>
+            {{voo.idVoo}} - Partida prevista: {{voo.partidaPrevista}}
+            {% if voo.partidaReal %}
+             - Partida real : {{voo.partidaReal}}
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% endblock %}
+
+</body>

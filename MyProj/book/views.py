@@ -100,7 +100,48 @@ def statusupdateview(request, idVoo):
     return render(request, "status-update.html", {'form': form})
 
 def relatorioview(request):
+
     return render(request, "relatorio.html")
+
+def partidasview(request):
+    voos = Voo.objects.all()
+    voosContidos = []
+    if request.method == 'POST':
+        dtInicio = request.POST.dtInicio
+        dtFim = request.POST.dtFim
+        for voo in voos:
+            if voo.partidaReal:
+                if (voo.partidaReal >= dtInicio and voo.partidaReal <= dtFim):
+                    voosContidos.append(voo)
+            elif (voo.partidaPrevista >= dtInicio and voo.partidaPrevista <= dtFim):
+                voosContidos.append(voo)
+            
+            return redirect('partidas_gerado_view', {'vooMostrar': voosContidos})
+
+    return render(request, "relatorio-partidas.html")
+
+def chegadasview(request):
+    voos = Voo.objects.all()
+    voosContidos = []
+    if request.method == 'POST':
+        dtInicio = request.POST.dtInicio
+        dtFim = request.POST.dtFim
+        for voo in voos:
+            if voo.chegadaReal:
+                if (voo.chegadaReal >= dtInicio and voo.chegadaReal <= dtFim):
+                    voosContidos.append(voo)
+            elif (voo.chegadaPrevista >= dtInicio and voo.chegadaPrevista <= dtFim):
+                voosContidos.append(voo)
+            
+            return redirect('chegadas_gerado_view', {'vooMostrar': voosContidos})
+
+    return render(request, "relatorio-chegadas.html")
+
+def partidas_gerado_view(request):
+    return render(request, "partidas-gerado.html")
+
+def chegadas_gerado_view(request):
+    return render(request, "chegadas-gerado.html")
     
 def painelview(request):
     vooMostrar = Voo.objects.all()

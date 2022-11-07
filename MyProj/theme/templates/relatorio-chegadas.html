@@ -1,0 +1,15 @@
+<body>
+    <nav>
+        <a href="{% url 'relatorioview' %}">Retornar</a>
+    </nav>
+    <h1>Gerar relatório de chegadas</h1>
+    <div>
+        <p>Intervalo: </p>
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            <input type="datetime-local" id="dtInicio" name="dtInicio">
+            <input type="datetime-local" id="dtFim" name="dtFim">
+            <input type="submit" value="Gerar">
+        </form>
+    </div>
+</body>

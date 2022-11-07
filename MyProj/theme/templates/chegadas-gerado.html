@@ -1,0 +1,24 @@
+<body>
+
+    <nav>
+        <a href="{% url 'relatorioview' %}">Retornar</a>
+    </nav>
+
+    {% block content %}
+
+    <h2>{{vooMostrar.length}} chegadas no intervalo:</h2>
+
+    <ul>
+        {% for voo in vooMostrar %}
+        <li>
+            {{voo.idVoo}} - Chegada prevista: {{voo.chegadaPrevista}}
+            {% if voo.chegadaReal %}
+             - Chegada real : {{voo.chegadaReal}}
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% endblock %}
+
+</body>
