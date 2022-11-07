@@ -2,14 +2,15 @@
     <nav>
         <a href="{% url 'relatorioview' %}">Retornar</a>
     </nav>
+    {% block content %}
     <h1>Gerar relatório de partidas</h1>
     <div>
         <p>Intervalo: </p>
-        <form action="" method="post" novalidate>
+        <form action="" method="post">
             {% csrf_token %}
-            <input type="datetime-local" id="dtInicio" name="dtInicio">
-            <input type="datetime-local" id="dtFim" name="dtFim">
-            <input type="submit" value="Gerar">
+            {{ form.as_p }}
+            <input type="submit" value="Submit">
         </form>
     </div>
+    {% endblock %}
 </body>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 #from book.classes.teste import ContactUsForm
-from book.forms import VooForm, VooStatusForm
+from book.forms import VooForm, VooStatusForm, DtIntervalForm
 from book.models import Voo, Funcionario
 
 # Create your views here.
@@ -89,35 +89,43 @@ def partidasview(request):
     voos = Voo.objects.all()
     voosContidos = []
     if request.method == 'POST':
-        dtInicio = request.POST.dtInicio
-        dtFim = request.POST.dtFim
-        for voo in voos:
-            if voo.partidaReal:
-                if (voo.partidaReal >= dtInicio and voo.partidaReal <= dtFim):
+        form = DtIntervalForm(request.POST)
+        if form.is_valid():
+            dtInicio = form.cleaned_data.get('dtInicio')
+            dtFim = form.cleaned_data.get('dtFim')
+            for voo in voos:
+                if voo.partidaReal:
+                    if (voo.partidaReal >= dtInicio and voo.partidaReal <= dtFim):
+                        voosContidos.append(voo)
+                elif (voo.partidaPrevista >= dtInicio and voo.partidaPrevista <= dtFim):
                     voosContidos.append(voo)
-            elif (voo.partidaPrevista >= dtInicio and voo.partidaPrevista <= dtFim):
-                voosContidos.append(voo)
-            
-            return redirect('partidas_gerado_view', {'vooMostrar': voosContidos})
+                
+                return redirect('partidas_gerado_view', {'vooMostrar': voosContidos})
+    else:
+        form = DtIntervalForm()
 
-    return render(request, "relatorio-partidas.html")
+    return render(request, "relatorio-partidas.html", {'form': form})
 
 def chegadasview(request):
     voos = Voo.objects.all()
     voosContidos = []
     if request.method == 'POST':
-        dtInicio = request.POST.dtInicio
-        dtFim = request.POST.dtFim
-        for voo in voos:
-            if voo.chegadaReal:
-                if (voo.chegadaReal >= dtInicio and voo.chegadaReal <= dtFim):
+        form = DtIntervalForm(request.POST)
+        if form.is_valid():
+            dtInicio = form.cleaned_data.get('dtInicio')
+            dtFim = form.cleaned_data.get('dtFim')
+            for voo in voos:
+                if voo.chegadaReal:
+                    if (voo.chegadaReal >= dtInicio and voo.chegadaReal <= dtFim):
+                        voosContidos.append(voo)
+                elif (voo.chegadaPrevista >= dtInicio and voo.chegadaPrevista <= dtFim):
                     voosContidos.append(voo)
-            elif (voo.chegadaPrevista >= dtInicio and voo.chegadaPrevista <= dtFim):
-                voosContidos.append(voo)
-            
-            return redirect('chegadas_gerado_view', {'vooMostrar': voosContidos})
+                
+                return redirect('chegadas_gerado_view', {'vooMostrar': voosContidos})
+    else:
+        form = DtIntervalForm()
 
-    return render(request, "relatorio-chegadas.html")
+    return render(request, "relatorio-chegadas.html", {'form': form})
 
 def partidas_gerado_view(request):
     return render(request, "partidas-gerado.html")

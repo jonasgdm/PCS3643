@@ -21,3 +21,7 @@ class VooStatusForm(forms.ModelForm):
     class Meta:
         model = Voo
         fields = ('statusVoo',)
+
+class DtIntervalForm(forms.Form):
+    dtInicio = forms.DateTimeField()
+    dtFim = forms.DateTimeField()
