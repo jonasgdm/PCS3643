@@ -89,7 +89,8 @@ def relatorioview(request):
     return render(request, "relatorio.html")
     
 def painelview(request):
-    return render(request, "painel.html")
+    vooMostrar = Voo.objects.all()
+    return render(request, "painel.html", {'vooMostrar': vooMostrar})
 
 def monitoracaoview(request):
     return render(request, "monitoracao-status.html")
