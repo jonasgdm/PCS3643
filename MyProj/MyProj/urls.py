@@ -24,7 +24,7 @@ urlpatterns = [
     # path('login', views.loginview),
     path('crud', views.crudview, name='crudview'),
     path('crud/create', views.crudcreateview, name='crudcreateview'),
-    path('crud/update/', views.crud_delete_list_view, name='crud_delete_list_view'),
+    path('crud/delete/', views.crud_delete_list_view, name='crud_delete_list_view'),
     path('crud/delete/<str:idVoo>/', views.cruddeleteview, name='cruddeleteview'),
     path('crud/read', views.crudreadview, name='crudreadview'),
     path('crud/read/<str:idVoo>/', views.crud_read_specific_view, name='crud_read_specific_view'),

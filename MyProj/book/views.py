@@ -39,7 +39,7 @@ def cruddeleteview(request, idVoo):
     if request.method == 'POST':
         voo.delete()
 
-        return redirect('crud-view')
+        return redirect('crudview')
 
     return render(request, "crud-delete.html", {'voo': voo})
     
