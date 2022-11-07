@@ -14,9 +14,6 @@ def crudview(request):
     return render(request, "crud.html")
     
 def crudcreateview(request):
-    #print('The request method is:', request.method)
-    #print('The POST data is:', request.POST)
-
     if request.method == 'POST':
         form = VooForm(request.POST)
 
@@ -44,21 +41,6 @@ def cruddeleteview(request, idVoo):
     return render(request, "crud-delete.html", {'voo': voo})
     
 def crudreadview(request):
-    # query = request.GET
-    # vooMostrar = None
-    # try:
-    #     vooId = query.get('idVoo')
-    # except:
-    #     vooId = None
-
-    # if vooId is not None:
-    #     vooMostrar = Voo.objects.get(idVoo=vooId)
-    
-    # context = {
-    #     "voo": vooMostrar
-    # }
-    # Voo.objects.create(idVoo='LAM3369', companhiaAerea='LATAM', origem='GRU', destino='FRA',
-    #                    partidaPrevista='2022-10-10 17:33:06', chegadaPrevista='2022-10-11 16:02:47')
     vooMostrar = Voo.objects.all()
     return render(request, "crud-read.html", {'vooMostrar': vooMostrar})
 

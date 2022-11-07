@@ -157,7 +157,43 @@ class ReadVooTest(TestCase):
 
 class UpdateVooTest(TestCase):
     def teste_atualizar_dados_com_sucesso(self):
-        criarVoo(self)
+        vooForm  = criarVoo(self)
+        vooModel = Voo.objects.get(idVoo=vooForm.idVoo)
+
+        form = VooForm(data={'idVoo': vooModel.idVoo, 'companhiaAerea': vooModel.companhiaAerea,'origem': vooModel.origem,'destino': vooModel.destino,
+                             'partidaPrevista': vooModel.partidaPrevista, 'chegadaPrevista': vooModel.chegadaPrevista,'statusVoo': 'Programado'}, instance=vooModel)
+        self.assertEqual(form.is_valid(), True)
+
+        self.assertNotEqual(vooForm.statusVoo, 'Programado')
+        vooForm = form.save()
+        self.assertEqual(vooForm.statusVoo, 'Programado')
+
+    def teste_atualizar_dados_com_formato_errado(self):
+        vooForm  = criarVoo(self)
+        vooModel = Voo.objects.get(idVoo=vooForm.idVoo)
+
+        partidaPrevista = 'ABBA'
+
+        form = VooForm(data={'idVoo': vooModel.idVoo, 'companhiaAerea': vooModel.companhiaAerea,'origem': vooModel.origem,'destino': vooModel.destino,
+                             'partidaPrevista': partidaPrevista, 'chegadaPrevista': vooModel.chegadaPrevista,'statusVoo': 'Programado'}, instance=vooModel)
+        self.assertEqual(form.is_valid(), False)
+        
+        try:
+            vooForm = form.save()
+        except:
+            self.assertNotEqual(vooForm.partidaPrevista, partidaPrevista)
+
+class DeleteVooTest(TestCase):
+    def teste_deletar_voo_com_sucesso(self):
+        vooForm  = criarVoo(self)
+        vooModel = Voo.objects.get(idVoo=vooForm.idVoo)
+        vooModel.delete()
+        
+        try:
+            vooModel = Voo.objects.get(idVoo=vooForm.idVoo)
+            raise Exception
+        except:
+            self.assertIsNone(vooModel.idVoo)
 
 def criarVoo(TestCase, Tipo='1'):
     if Tipo == '1':
