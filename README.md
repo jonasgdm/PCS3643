@@ -46,7 +46,7 @@ Para executar a aplicação, insira o seguinte comando no terminal:
 python manage.py runserver
 ```
 
-Após isso, podemos acessar a aplicação em um navegador, na URL [http://localhost:8000/FIRST](http://localhost:8000/FIRST).
+Após isso, podemos acessar a aplicação em um navegador, por exemplo, na URL [http://localhost:8000/FIRST](http://localhost:8000/FIRST).
 
 Para mais detalhes, consultar a referência [\[2\]](#Referências).
 
@@ -68,6 +68,25 @@ Para rodar os testes, execute o seguinte comando:
 ```
 python manage.py test
 ```
+
+### Templates desenvolvidos
+- `http://localhost:8000/inicio-operador` - Tela inicial para Operador de Voos
+
+- `http://localhost:8000/crud` - Tela do CRUD
+
+- `http://localhost:8000/crud/create` - Tela de criar cadastro de Voo 
+
+- `http://localhost:8000/crud/read` - Tela de ver dados do Voo (lista)
+
+- `http://localhost:8000/crud/read/idVOO` - Tela de ver dados do Voo (especifico para cada código de voo existente substituido em idVOO)
+
+- `http://localhost:8000/crud/update/` - Tela de autalizar dados do Voo (lista)
+
+- `http://localhost:8000/crud/update/idVOO` - Tela de autalizar dados do Voo (especifico para cada código de voo existente substituido em idVOO)
+
+- `http://localhost:8000/crud/delete/` - Tela de deletar cadastro do Voo (lista)
+
+- `http://localhost:8000/crud/delete/idVOO` - Tela de deletar cadastro do Voo (especifico para cada código de voo existente substituido em idVOO)
 
 ## Projeto da disciplina
 O projeto consiste em um sistema de monitoramento de voos, com funcionalidades como o cadastro e atualização de dados sobre os voos, o monitoramento em tempo real dos mesmos e a geração de relatórios detalhados sobre as viagens [\[1\]](#Referências).
