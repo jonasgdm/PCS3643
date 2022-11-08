@@ -1,6 +1,7 @@
 from django.test import TestCase
 from book.models import Funcionario, Voo
-from book.forms import VooForm
+from book.forms import VooForm, VooStatusForm, DtIntervalForm
+from datetime import datetime
 
 # Teste do BD
 class FuncionarioModelTest(TestCase):
@@ -29,7 +30,7 @@ class VooModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         Voo.objects.create(idVoo='LAM3326', companhiaAerea='LATAM', origem='GRU', destino='FRA',
-                           partidaPrevista='2022-10-10 17:33:06', chegadaPrevista='2022-10-11 16:02:47')
+                           partidaPrevista='2022-10-10 17:33:06', chegadaPrevista='2022-10-11 16:02:47', statusVoo='Taxiando')
 
     def teste_criacao_id(self):
         voo_criado = Voo.objects.get(origem='GRU')
@@ -60,27 +61,28 @@ class CreateVooTest(TestCase):
         companhiaAerea = 'CRUD'
         origem = 'Nova York'
         destino = 'Nova Jersey'
-        partidaPrevista = 'ABBA'
+        partidaPrevista = '2022-12-02 15:33:06'
         chegadaPrevista = '2022-32-32 17:33:06'
+        statusVoo = 'Taxiando'
 
-        form = fillForm(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, False)
+        form = fillForm(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, statusVoo, False)
         self.assertIsNone(form)
 
         partidaPrevista = '2022-02-12 23:00:10'
-        form = fillForm(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, False)
+        form = fillForm(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, statusVoo, False)
         self.assertIsNone(form)
 
         chegadaPrevista = '2022-12-02 26:66:61'
-        form = fillForm(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, False)
+        form = fillForm(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, statusVoo, False)
         self.assertIsNone(form)
 
         chegadaPrevista = '2022-12-02 17:33:06'
-        form = fillForm(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, True)
+        form = fillForm(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, statusVoo, True)
         self.assertIsNotNone(form)
 
         voo = form.save()
 
-        vooCorreto(self, voo, idVoo, companhiaAerea, origem, destino)
+        vooCorreto(self, voo, idVoo, companhiaAerea, origem, destino, statusVoo)
 
     def teste_criar_faltando_parametro(self):
         idVoo = 'PIX9512'
@@ -89,22 +91,25 @@ class CreateVooTest(TestCase):
         destino = 'Coca-Cola'
         partidaPrevista = '2022-11-11 16:30:00'
         chegadaPrevista = '2022-11-14 16:02:47'
+        statusVoo = 'Programado'
 
-        form = fillForm(self, idVoo, None, None, None, None, None, False)
-        form = fillForm(self, None, companhiaAerea, None, None, None, None, False)
-        form = fillForm(self, None, None, origem, None, None, None, False)
-        form = fillForm(self, None, None, None, destino, None, None, False)
-        form = fillForm(self, None, None, None, None, partidaPrevista, None, False)
-        form = fillForm(self, None, None, None, None, None, chegadaPrevista, False)
-        form = fillForm(self, idVoo, companhiaAerea, None, None, None, None, False)
-        form = fillForm(self, idVoo, companhiaAerea, origem, None, None, None, False)
-        form = fillForm(self, idVoo, companhiaAerea, origem, destino, None, None, False)
-        form = fillForm(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, None, False)
-        form = fillForm(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, True)
+        form = fillForm(self, idVoo, None, None, None, None, None, None, False)
+        form = fillForm(self, None, companhiaAerea, None, None, None, None, None, False)
+        form = fillForm(self, None, None, origem, None, None, None, None, False)
+        form = fillForm(self, None, None, None, destino, None, None, None, False)
+        form = fillForm(self, None, None, None, None, partidaPrevista, None, None, False)
+        form = fillForm(self, None, None, None, None, None, chegadaPrevista, None, False)
+        form = fillForm(self, None, None, None, None, None, None, statusVoo, False)
+        form = fillForm(self, idVoo, companhiaAerea, None, None, None, None, None, False)
+        form = fillForm(self, idVoo, companhiaAerea, origem, None, None, None, None, False)
+        form = fillForm(self, idVoo, companhiaAerea, origem, destino, None, None, None, False)
+        form = fillForm(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, None, None, False)
+        form = fillForm(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, None, False)
+        form = fillForm(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, statusVoo, True)
         
         voo = form.save()
 
-        vooCorreto(self, voo, idVoo, companhiaAerea, origem, destino)
+        vooCorreto(self, voo, idVoo, companhiaAerea, origem, destino, statusVoo)
 
     def teste_criar_com_id_repetida(self):
         voo = criarVoo(self, '2')
@@ -114,14 +119,15 @@ class CreateVooTest(TestCase):
         destino = 'München'
         partidaPrevista = '2022-10-10 17:33:06'
         chegadaPrevista = '2022-10-11 16:02:47'
+        statusVoo = 'Programado'
 
-        form = fillForm(self, voo.idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, False)
+        form = fillForm(self, voo.idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, statusVoo, False)
 
         idVoo = 'SES3322'
-        form = fillForm(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, True)
+        form = fillForm(self, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, statusVoo, True)
         voo = form.save()
 
-        vooCorreto(self, voo, idVoo, companhiaAerea, origem, destino)
+        vooCorreto(self, voo, idVoo, companhiaAerea, origem, destino, statusVoo)
 
 # Teste de Unidade (Forms)
 class ReadVooTest(TestCase):
@@ -141,8 +147,9 @@ class ReadVooTest(TestCase):
         destino = 'Coca-Cola'
         partidaPrevista = 'ABBA'
         chegadaPrevista = '2022-11-14 16:02:47'
+        statusVoo = 'Programado'
         form = VooForm(data={'idVoo': idVoo, 'companhiaAerea': companhiaAerea,'origem': origem,'destino': destino,
-                             'partidaPrevista': partidaPrevista, 'chegadaPrevista': chegadaPrevista})
+                             'partidaPrevista': partidaPrevista, 'chegadaPrevista': chegadaPrevista, 'statusVoo': statusVoo})
 
         if form.is_valid():
             voo = form.save()
@@ -195,7 +202,56 @@ class DeleteVooTest(TestCase):
         except:
             self.assertIsNone(vooModel.idVoo)
 
+# Teste de Unidade (Forms)
+class MonitoracaoStatusTest(TestCase):
+    def teste_atualizar_valido(self):
+        voo = criarVoo(self, '3')
+        vooRead =  Voo.objects.get(idVoo=voo.idVoo)
+        TestCase.assertEqual(self, vooRead.statusVoo, 'Taxiando')
+        
+        novoStatus = 'Pronto'
+        form = VooStatusForm(data={'statusVoo': novoStatus}, instance=vooRead)
+        if form.is_valid():
+            voo = form.save()
+        vooRead = Voo.objects.get(idVoo=voo.idVoo)
+        TestCase.assertEqual(self, vooRead.statusVoo, 'Pronto')
+
+        vooRead.delete()
+
+    def teste_atualizar_invalido(self):
+        voo = criarVoo(self, '3')
+        vooRead =  Voo.objects.get(idVoo=voo.idVoo)
+        TestCase.assertEqual(self, vooRead.statusVoo, 'Taxiando')
+        
+        novoStatus = 'Invalido'
+        form = VooStatusForm(data={'statusVoo': novoStatus}, instance=vooRead)
+        TestCase.assertFalse(self, form.is_valid())
+        if form.is_valid():
+            voo = form.save()
+        TestCase.assertEqual(self, vooRead.statusVoo, 'Taxiando')
+
+        vooRead.delete()
+
+class RelatorioDateTimeIntervalTest(TestCase):
+    def teste_criar_invervalo(self):
+        inicio = '2022-10-10 17:33:06'
+        fim = '2022-10-12 11:08:23'
+        dtInicio = datetime.strptime(inicio, "%Y-%m-%d %H:%M:%S")
+        dtFim = datetime.strptime(fim, "%Y-%m-%d %H:%M:%S")
+        form = DtIntervalForm(data={'dtInicio': dtInicio, 'dtFim': dtFim})
+        if form.is_valid():
+            dtInicioForm = form.cleaned_data.get('dtInicio')
+            dtFimForm = form.cleaned_data.get('dtFim')
+            TestCase.assertNotEqual(self, dtInicioForm, inicio)
+            TestCase.assertNotEqual(self, dtFimForm, fim)
+            TestCase.assertEqual(self, dtInicioForm, dtInicio)
+            TestCase.assertEqual(self, dtFimForm, dtFim)
+            TestCase.assertGreater(self, dtFimForm, dtInicioForm)
+        else:
+            TestCase.fail(self, "Erro no form de intervalo DateTime")
+
 def criarVoo(TestCase, Tipo='1'):
+    statusVoo = None
     if Tipo == '1':
         idVoo = 'SES3322'
         companhiaAerea = 'Zeus Airlines'
@@ -203,6 +259,7 @@ def criarVoo(TestCase, Tipo='1'):
         destino = 'München'
         partidaPrevista = '2022-10-10 17:33:06'
         chegadaPrevista = '2022-10-11 16:02:47'
+        statusVoo = 'Taxiando'
     elif Tipo == '2':
         idVoo = 'PIX9512'
         companhiaAerea = 'Juju Airlines'
@@ -210,17 +267,25 @@ def criarVoo(TestCase, Tipo='1'):
         destino = 'Coca-Cola'
         partidaPrevista = '2022-11-11 16:30:00'
         chegadaPrevista = '2022-11-14 16:02:47'
+        statusVoo = 'Taxiando'
+    elif Tipo == '3':
+        idVoo = 'SOS9512'
+        companhiaAerea = 'Juju Airlines'
+        origem = 'Marmitex'
+        destino = 'Coca-Cola'
+        partidaPrevista = '2022-11-11 16:30:00'
+        chegadaPrevista = '2022-11-14 16:02:47'
+        statusVoo = 'Taxiando'
 
-    form = fillForm(TestCase, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista)
+    form = fillForm(TestCase, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, statusVoo)
     voo = form.save()
-
-    vooCorreto(TestCase, voo, idVoo, companhiaAerea, origem, destino)
+    vooCorreto(TestCase, voo, idVoo, companhiaAerea, origem, destino, statusVoo)
 
     return voo
-    
-def fillForm(TestCase, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, correto=True):
+
+def fillForm(TestCase, idVoo, companhiaAerea, origem, destino, partidaPrevista, chegadaPrevista, statusVoo, correto=True):
     form = VooForm(data={'idVoo': idVoo, 'companhiaAerea': companhiaAerea,'origem': origem,'destino': destino,
-                         'partidaPrevista': partidaPrevista, 'chegadaPrevista': chegadaPrevista})
+                         'partidaPrevista': partidaPrevista, 'chegadaPrevista': chegadaPrevista, 'statusVoo': statusVoo})
 
     TestCase.assertEqual(form.is_valid(), correto)
 
@@ -229,7 +294,7 @@ def fillForm(TestCase, idVoo, companhiaAerea, origem, destino, partidaPrevista, 
     else:
         return None
 
-def vooCorreto(TestCase, voo, idVoo, companhiaAerea, origem, destino):
+def vooCorreto(TestCase, voo, idVoo, companhiaAerea, origem, destino, statusVoo):
     TestCase.assertEqual(voo.idVoo, idVoo)
     TestCase.assertEqual(voo.companhiaAerea, companhiaAerea)
     TestCase.assertEqual(voo.origem, origem)
@@ -238,10 +303,10 @@ def vooCorreto(TestCase, voo, idVoo, companhiaAerea, origem, destino):
     TestCase.assertIsNone(voo.partidaReal)
     TestCase.assertIsNotNone(voo.chegadaPrevista)
     TestCase.assertIsNone(voo.chegadaReal)
-    TestCase.assertEqual(voo.statusVoo, '')
+    TestCase.assertEqual(voo.statusVoo, statusVoo)
     TestCase.assertEqual(voo.conexoes, '')
     TestCase.assertIsNotNone(voo.ultimaAtualizacao)
-    
+
 def compararVoos(TestCase, vooForm, vooModel):
     TestCase.assertEqual(vooForm.idVoo, vooModel.idVoo)
     TestCase.assertEqual(vooForm.companhiaAerea, vooModel.companhiaAerea)
