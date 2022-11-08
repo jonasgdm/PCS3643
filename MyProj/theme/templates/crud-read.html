@@ -1,25 +1,40 @@
-<body>
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    </head>
 
-    <nav>
-        <a href="{% url 'crudview' %}">CRUD</a>
-    </nav>
+    <body>
+        <div class="container">
+            <div class="row">
+                <nav>
+                    <a class="btn btn-lg btn-success" href="{% url 'operadorview' %}">Inicio</a>
+                    <a class="btn btn-lg btn-info" href="{% url 'crudview' %}">CRUD</a>
+                </nav>
+            
+            </div>
 
-    {% block content %}
+        {% block content %}
 
-    <h1>Lista de Voos</h1>
+        <h1>Lista de Voos</h1>
 
-    <ul>
-    {% for voo in vooMostrar %}
-        <li>
-            <a href="{% url 'crud_read_specific_view' voo.idVoo %}">{{ voo }}</a>
-            - <a href="{% url 'crudupdateview' voo.idVoo %}"><small>[atualizar]</small></a>
-            - <a href="{% url 'cruddeleteview' voo.idVoo %}"><small>[apagar]</small></a>
-        </li>
-    {% endfor %}
-    </ul>
+        <ul>
+        {% for voo in vooMostrar %}
+            <li>
+                <a href="{% url 'crud_read_specific_view' voo.idVoo %}">{{ voo }}</a>
+                - <a href="{% url 'crudupdateview' voo.idVoo %}"><small>[atualizar]</small></a>
+                - <a href="{% url 'cruddeleteview' voo.idVoo %}"><small>[apagar]</small></a>
+            </li>
+        {% endfor %}
+        </ul>
 
-    <a href="{% url 'crudcreateview' %}">Criar novo Voo</a>
+        <a href="{% url 'crudcreateview' %}">Criar novo Voo</a>
 
-    {% endblock %}
-
-</body>
+        {% endblock %}
+        
+        </div>
+    </body>
+</html>
