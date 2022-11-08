@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render, redirect
 #from book.classes.teste import ContactUsForm
 from book.forms import VooForm, VooStatusForm, DtIntervalForm
@@ -87,20 +88,18 @@ def relatorioview(request):
 
 def partidasview(request):
     voos = Voo.objects.all()
-    voosContidos = []
+
     if request.method == 'POST':
         form = DtIntervalForm(request.POST)
+
         if form.is_valid():
-            dtInicio = form.cleaned_data.get('dtInicio')
-            dtFim = form.cleaned_data.get('dtFim')
-            for voo in voos:
-                if voo.partidaReal:
-                    if (voo.partidaReal >= dtInicio and voo.partidaReal <= dtFim):
-                        voosContidos.append(voo)
-                elif (voo.partidaPrevista >= dtInicio and voo.partidaPrevista <= dtFim):
-                    voosContidos.append(voo)
-                
-                return redirect('partidas_gerado_view', {'vooMostrar': voosContidos})
+            dtInicio = str(form.cleaned_data['dtInicio'])
+            dtFim = str(form.cleaned_data['dtFim'])
+
+            #dtInicio = datetime.strptime(dtInicio, "%Y-%m-%d %H:%M:%S%z")
+            #dtFim = datetime.strptime(dtFim, "%Y-%m-%d %H:%M:%S%z")
+            
+            return redirect('partidas_gerado_view', dtInicio, dtFim)
     else:
         form = DtIntervalForm()
 
@@ -108,30 +107,34 @@ def partidasview(request):
 
 def chegadasview(request):
     voos = Voo.objects.all()
-    voosContidos = []
+    
     if request.method == 'POST':
         form = DtIntervalForm(request.POST)
+
         if form.is_valid():
-            dtInicio = form.cleaned_data.get('dtInicio')
-            dtFim = form.cleaned_data.get('dtFim')
-            for voo in voos:
-                if voo.chegadaReal:
-                    if (voo.chegadaReal >= dtInicio and voo.chegadaReal <= dtFim):
-                        voosContidos.append(voo)
-                elif (voo.chegadaPrevista >= dtInicio and voo.chegadaPrevista <= dtFim):
-                    voosContidos.append(voo)
-                
-                return redirect('chegadas_gerado_view', {'vooMostrar': voosContidos})
+            dtInicio = str(form.cleaned_data['dtInicio'])
+            dtFim = str(form.cleaned_data['dtFim'])
+
+            #dtInicio = datetime.strptime(dtInicio, "%Y-%m-%d %H:%M:%S%z")
+            #dtFim = datetime.strptime(dtFim, "%Y-%m-%d %H:%M:%S%z")
+            
+            return redirect('chegadas_gerado_view', dtInicio, dtFim)
     else:
         form = DtIntervalForm()
 
     return render(request, "relatorio-chegadas.html", {'form': form})
 
-def partidas_gerado_view(request):
-    return render(request, "partidas-gerado.html")
+def partidas_gerado_view(request, dtInicio, dtFim):
+    voos = Voo.objects.all()
+    voosContidos = voos.filter(partidaPrevista__range=(dtInicio, dtFim))
+    numVoos = voosContidos.count()
+    return render(request, "partidas-gerado.html", {'vooMostrar': voosContidos, 'numVoos': numVoos})
 
-def chegadas_gerado_view(request):
-    return render(request, "chegadas-gerado.html")
+def chegadas_gerado_view(request, dtInicio, dtFim):
+    voos = Voo.objects.all()
+    voosContidos = voos.filter(partidaPrevista__range=(dtInicio, dtFim))
+    numVoos = voosContidos.count()
+    return render(request, "chegadas-gerado.html", {'vooMostrar': voosContidos, 'numVoos': numVoos})
     
 def painelview(request):
     vooMostrar = Voo.objects.all()

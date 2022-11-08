@@ -111,9 +111,9 @@ A seguir tem-se a lista das telas implementadas:
 
 - `http://localhost:8000/relatorio/chegadas/` - Tela do relatório pelas chegadas
 
-- `http://localhost:8000/relatorio/partidas-gerado/` - Tela do relatório gerado
+- `http://localhost:8000/relatorio/partidas-gerado/intervaloSolicitado/` - Tela do relatório gerado (especifico para cada intervalo solicitado substituido em intervaloSolicitado)
 
-- `http://localhost:8000/relatorio/chegadas-gerado/` - Tela do relatório gerado
+- `http://localhost:8000/relatorio/chegadas-gerado/intervaloSolicitado/` - Tela do relatório gerado (especifico para cada intervalo solicitado substituido em intervaloSolicitado)
 
 - `http://localhost:8000/painel-monitoracao/` - Tela do Painel de Monitoração
 
