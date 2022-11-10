@@ -2,6 +2,7 @@ from django.test import TestCase
 from book.models import Funcionario, Voo
 from book.forms import VooForm, VooStatusForm, DtIntervalForm
 from datetime import datetime
+from http import HTTPStatus
 
 # Teste do BD
 class FuncionarioModelTest(TestCase):

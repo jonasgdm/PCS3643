@@ -1,26 +1,61 @@
 from django import forms
+from datetime import datetime
 
 from book.models import Voo
 
 class VooForm(forms.ModelForm):
     class Meta:
         model = Voo
-        fields = '__all__'
-        # fields = ('idVoo', 'companhiaAerea', 'origem', 'destino', 'partidaPrevista', 'chegadaPrevista', 'conexoes')
-        # widgets = {
-        #     'idVoo' : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex.: PCS3643'}),
-        #     'companhiaAerea' : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex.: Laboratório de Engenharia de Software I Airline'}),
-        #     'origem' : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex.: Escola  Politécnica'}),
-        #     'destino' : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex.: Escola  Politécnica'}),
-        #     'partidaPrevista' : forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': ''}),
-        #     'chegadaPrevista' : forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': ''}),
-        #     'conexoes' : forms.Textarea(attrs={'class': 'form-control', 'placeholder': ''})
-        # }
+        exclude = ('partidaReal', 'chegadaReal', 'statusVoo')
+        # fields = '__all__'
 
 class VooStatusForm(forms.ModelForm):
     class Meta:
         model = Voo
-        fields = ('statusVoo',)
+        fields = ('statusVoo', 'partidaReal', 'chegadaReal')
+        widgets = {'partidaReal': forms.HiddenInput(),
+                   'chegadaReal': forms.HiddenInput()}
+
+    def clean_statusVoo(self):
+        currentStatus = self.instance.statusVoo
+        statusVoo = self.data.get('statusVoo')
+        statusOrder = {
+            "Confirmado": 0,
+            "Embarcando": 1,
+            "Cancelado": 1,
+            "Programado": 2,
+            "Taxiando": 3,
+            "Pronto": 4,
+            "Autorizado": 5,
+            "Em Voo": 6,
+            "Aterrissado": 7
+        }
+        
+        currentOrder = statusOrder[currentStatus]
+        newOrder = statusOrder[statusVoo]
+        print(currentOrder + newOrder)
+        if newOrder < currentOrder or newOrder > currentOrder + 1:
+            self.add_error('statusVoo', 'Transição de status inválida')
+
+        return statusVoo
+
+    def clean_partidaReal(self):
+        statusVoo = self.data.get('statusVoo')
+        partidaReal = self.data.get('partidaReal')
+        if statusVoo == 'Autorizado' and partidaReal != None:
+            return datetime.now()
+        else:
+            return partidaReal
+
+    def clean_chegadaReal(self):
+        statusVoo = self.data.get('statusVoo')
+        chegadaReal = self.data.get('chegadaReal')
+        if statusVoo == 'Aterrissado' and chegadaReal != None:
+            return datetime.now()
+        else:
+            return chegadaReal
+
+
 
 class DtIntervalForm(forms.Form):
     dtInicio = forms.DateTimeField()

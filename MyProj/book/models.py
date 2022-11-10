@@ -15,14 +15,15 @@ class Funcionario(models.Model):
 
 class Voo(models.Model):
     STATUS_CHOICES = (
+        ("Confirmado", "Confirmado"),
         ("Embarcando", "Embarcando"),
-        ("Cancelado", "Cancelado"),
         ("Programado", "Programado"),
         ("Taxiando", "Taxiando"),
         ("Pronto", "Pronto"),
         ("Autorizado", "Autorizado"),
         ("Em Voo", "Em Voo"),
-        ("Aterrissado", "Aterrissado"))
+        ("Aterrissado", "Aterrissado"),
+        ("Cancelado", "Cancelado"),)
     idVoo = models.fields.CharField(primary_key=True, max_length=7)
     companhiaAerea = models.CharField(max_length=20, null=False)
     origem = models.CharField(max_length=20, null=False)
@@ -31,7 +32,7 @@ class Voo(models.Model):
     partidaReal = models.DateTimeField(null=True, blank=True)
     chegadaPrevista = models.DateTimeField(null=False)
     chegadaReal = models.DateTimeField(null=True, blank=True)
-    statusVoo = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    statusVoo = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Confirmado")
     # TODO: Trocar o nome da variavel conexoes pra outro nome conforme comentario do prof
     conexoes = models.CharField(max_length=100, blank=True)
     ultimaAtualizacao= models.DateTimeField(auto_now=True)

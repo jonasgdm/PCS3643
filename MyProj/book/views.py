@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.shortcuts import render, redirect
+from django.db.models import Q
 #from book.classes.teste import ContactUsForm
 from book.forms import VooForm, VooStatusForm, DtIntervalForm
 from book.models import Voo, Funcionario
@@ -87,7 +88,7 @@ def relatorioview(request):
     return render(request, "relatorio.html")
 
 def partidasview(request):
-    voos = Voo.objects.all()
+    #voos = Voo.objects.all()
 
     if request.method == 'POST':
         form = DtIntervalForm(request.POST)
@@ -106,7 +107,7 @@ def partidasview(request):
     return render(request, "relatorio-partidas.html", {'form': form})
 
 def chegadasview(request):
-    voos = Voo.objects.all()
+    #voos = Voo.objects.all()
     
     if request.method == 'POST':
         form = DtIntervalForm(request.POST)
@@ -126,15 +127,15 @@ def chegadasview(request):
 
 def partidas_gerado_view(request, dtInicio, dtFim):
     voos = Voo.objects.all()
-    voosContidos = voos.filter(partidaPrevista__range=(dtInicio, dtFim))
+    voosContidos = voos.filter(Q(partidaReal__range=(dtInicio, dtFim)) | (Q(partidaPrevista__range=(dtInicio, dtFim)) & Q(partidaReal__isnull=True)))
     numVoos = voosContidos.count()
-    return render(request, "partidas-gerado.html", {'vooMostrar': voosContidos, 'numVoos': numVoos})
+    return render(request, "partidas-gerado.html", {'vooMostrar': voosContidos, 'numVoos': numVoos, 'dtInicio': dtInicio, 'dtFim':dtFim})
 
 def chegadas_gerado_view(request, dtInicio, dtFim):
     voos = Voo.objects.all()
-    voosContidos = voos.filter(partidaPrevista__range=(dtInicio, dtFim))
+    voosContidos = voos.filter(Q(chegadaReal__range=(dtInicio, dtFim)) | (Q(chegadaPrevista__range=(dtInicio, dtFim)) & Q(chegadaReal__isnull=True)))
     numVoos = voosContidos.count()
-    return render(request, "chegadas-gerado.html", {'vooMostrar': voosContidos, 'numVoos': numVoos})
+    return render(request, "chegadas-gerado.html", {'vooMostrar': voosContidos, 'numVoos': numVoos, 'dtInicio': dtInicio, 'dtFim':dtFim})
     
 def painelview(request):
     vooMostrar = Voo.objects.all()

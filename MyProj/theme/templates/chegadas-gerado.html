@@ -1,24 +1,51 @@
-<body>
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/inicio.css' %}">
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    </head>
+    <body>
 
     <nav>
-        <a href="{% url 'relatorioview' %}">Retornar</a>
+        <a class="btn btn-lg btn-success" href="{% url 'relatorioview' %}">Retornar</a>
     </nav>
 
     {% block content %}
 
-    <h2>{{numVoos}} chegadas no intervalo:</h2>
+    <h2>{{numVoos}} chegadas no intervalo de {{dtInicio}} à {{dtFim}}:</h2>
 
     <ul>
         {% for voo in vooMostrar %}
-        <li>
-            {{voo.idVoo}} - Chegada prevista: {{voo.chegadaPrevista}}
-            {% if voo.chegadaReal %}
-             - Chegada real : {{voo.chegadaReal}}
-            {% endif %}
+            <h3>{{voo.idVoo}}</h3>
+            <ul>
+                <li>Companhia Aérea: {{ voo.companhiaAerea }}</li>
+                <li>Origem: {{ voo.origem }}</li>
+                <li>Destino: {{ voo.destino }}</li>
+                
+                {% if voo.partidaReal %}
+                    <li>Partida real : {{voo.partidaReal}}</li>
+                {% else %}
+                    <li>Partida prevista: {{voo.partidaPrevista}}</li>
+                {% endif %}
+                <b>
+                {% if voo.chegadaReal %}
+                    <li>Pouso Real: {{ voo.chegadaReal }}</li>
+                {% else %}
+                    <li>Pouso previsto: {{ voo.chegadaPrevista }}</li>
+                {% endif %}
+                </b>
+                <li>Status do Voo: {{ voo.statusVoo }}</li>
+                {% if voo.conexoes %}
+                    <li>Rota: {{ voo.conexoes }}</li>
+                {% endif %}
+                <li>Ultima Atualização: {{ voo.ultimaAtualizacao }}</li>
+            </ul>
         </li>
         {% endfor %}
     </ul>
 
     {% endblock %}
 
-</body>
+    </body>

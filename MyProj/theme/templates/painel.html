@@ -19,15 +19,44 @@
             </div>
             {% block content %}
 
-            <h3>Voos Ativos</h3>
+            <h3>Voos</h3>
 
-            <ul>
-            {% for voo in vooMostrar %}
-                <li>
-                    {{voo}}: {{voo.statusVoo}}
-                </li>
-            {% endfor %}
-            </ul>
+            <div class="table">
+            <table>
+                <tr>
+                    <th>Voo</th>
+                    <th>Companhia Aérea</th>
+                    <th>Destino</th>
+                    <th>Decolagem</th>
+                    <th>Pouso</th>
+                    <th>Status</th>
+                </tr>
+                {% for voo in vooMostrar %}
+                    <tr>
+                        <td>{{voo}}</td>
+                        <td>{{voo.companhiaAerea}}</td>
+                        <td>{{voo.destino}}</td>
+                        {% if voo.chegadaReal %}
+                            <td>{{voo.partidaReal}}</td>
+                            <td>{{voo.chegadaReal}}</td>
+                        {% else %}
+                            {% if voo.partidaReal %}
+                                <td>{{voo.partidaReal}}</td>
+                                <td><i>{{voo.chegadaPrevista}}</i></td>
+                            {% else %}
+                                <td><i>{{voo.partidaPrevista}}</i></td>
+                                <td><i>{{voo.chegadaPrevista}}</i></td>
+                            {% endif %}
+                        {% endif %}
+                        {% if voo.statusVoo == 'Embarcando' %}
+                            <td><b>{{voo.statusVoo}}</b></td>
+                        {% else %}
+                            <td>{{voo.statusVoo}}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+            </div>
 
             {% endblock %}
         </div>
