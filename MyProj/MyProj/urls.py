@@ -41,4 +41,5 @@ urlpatterns = [
     path('inicio-gerente/', views.gerenteview, name='inicio_gerente_view'),
     path('inicio-monitoracao/', views.funcionarioview, name='inicio_monit_view'),
     path('monitoracao-status/update/<str:idVoo>/', views.statusupdateview, name='statusupdateview'),
+    path('', views.loginredirectview, name='loginredirectview'),
 ]

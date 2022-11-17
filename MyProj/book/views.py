@@ -14,6 +14,20 @@ def loginview(request):
     
 def crudview(request):
     return render(request, "crud.html")
+
+def loginredirectview(request):
+    if request.user.is_authenticated:
+        if request.user.groups.filter(name='monitoracao').exists():
+            return redirect('inicio_monit_view')
+        elif request.user.groups.filter(name='gerente').exists():
+            return redirect('inicio_gerente_view')
+        elif request.user.groups.filter(name='operador').exists():
+            return redirect('operadorview')
+        else:
+            return redirect('accounts/login/')
+    else:
+        return redirect('accounts/login/')
+
     
 def crudcreateview(request):
     if request.method == 'POST':

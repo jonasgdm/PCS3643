@@ -130,4 +130,4 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = "http://localhost:8000/inicio-gerente"
+LOGIN_REDIRECT_URL = "http://localhost:8000"
