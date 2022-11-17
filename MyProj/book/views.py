@@ -16,6 +16,9 @@ def crudview(request):
     return render(request, "crud.html")
 
 def loginredirectview(request):
+    if request.method == 'POST':
+        return redirect('accounts/login/')
+
     if request.user.is_authenticated:
         if request.user.groups.filter(name='monitoracao').exists():
             return redirect('inicio_monit_view')
@@ -24,9 +27,9 @@ def loginredirectview(request):
         elif request.user.groups.filter(name='operador').exists():
             return redirect('operadorview')
         else:
-            return redirect('accounts/login/')
+            return render(request, 'inicio-redireciona.html')
     else:
-        return redirect('accounts/login/')
+        return render(request, 'inicio-redireciona.html')
 
     
 def crudcreateview(request):

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'book',
+    'BruteBuster',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'BruteBuster.middleware.RequestMiddleware',
 ]
 
 ROOT_URLCONF = 'MyProj.urls'
@@ -71,6 +73,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'MyProj.wsgi.application'
 
+BB_MAX_FAILURES = 3
+BB_BLOCK_INTERVAL = 5
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
