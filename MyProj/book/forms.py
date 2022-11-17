@@ -8,6 +8,16 @@ class VooForm(forms.ModelForm):
         model = Voo
         exclude = ('partidaReal', 'chegadaReal', 'statusVoo')
         # fields = '__all__'
+        # widgets = {'idVoo'}
+
+    def clean_conexoes(self):
+        rota = self.data.get('conexoes')
+        origem = self.data.get('origem')
+        destino = self.data.get('destino')
+        if rota == '':
+            rota = f'{origem} - {destino}'
+
+        return rota
 
 class VooStatusForm(forms.ModelForm):
     class Meta:
