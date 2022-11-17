@@ -33,6 +33,15 @@
               <div id="formFooter">
                 <a class="underlineHover" href="#">Forgot Password?</a>
               </div>
+
+              {% block content %}
+                {% if isblocked %}
+                  <div class="container">
+                    <a class="btn btn-lg btn-danger " href="http://localhost:8000/accounts/login/">
+                    <i class="glyphicon glyphicon-dashboard pull-left"></i><span>BLOQUEADO</span></a>
+                  </div>
+                {% endif %}
+              {% endblock %}
           
             </div>
           </div>

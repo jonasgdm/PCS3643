@@ -3,11 +3,17 @@ from datetime import datetime
 
 from book.models import Voo
 
+
 class VooForm(forms.ModelForm):
     class Meta:
         model = Voo
         exclude = ('partidaReal', 'chegadaReal', 'statusVoo')
         # fields = '__all__'
+
+class VooUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Voo
+        exclude = ('idVoo', 'partidaReal', 'chegadaReal', 'statusVoo', 'companhiaAerea', 'origem', 'destino')
 
 class VooStatusForm(forms.ModelForm):
     class Meta:
@@ -60,3 +66,7 @@ class VooStatusForm(forms.ModelForm):
 class DtIntervalForm(forms.Form):
     dtInicio = forms.DateTimeField()
     dtFim = forms.DateTimeField()
+
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
