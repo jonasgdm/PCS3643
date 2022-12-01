@@ -19,9 +19,9 @@ from book import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("accounts/", include("django.contrib.auth.urls")),
+    # path("accounts/", include("django.contrib.auth.urls")),
     path('FIRST', views.bookview),
-    # path('login', views.loginview),
+    path('accounts/login/', views.loginview, name='loginview'),
     path('crud/', views.crudview, name='crudview'),
     path('crud/create/', views.crudcreateview, name='crudcreateview'),
     path('crud/delete/', views.crud_delete_list_view, name='crud_delete_list_view'),
@@ -42,4 +42,5 @@ urlpatterns = [
     path('inicio-gerente/', views.gerenteview, name='inicio_gerente_view'),
     path('inicio-monitoracao/', views.funcionarioview, name='inicio_monit_view'),
     path('monitoracao-status/update/<str:idVoo>/', views.statusupdateview, name='statusupdateview'),
+    path('', views.loginredirectview, name='loginredirectview'),
 ]

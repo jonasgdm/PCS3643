@@ -1,8 +1,10 @@
 from datetime import datetime
+from django.contrib.auth import authenticate, login
+from BruteBuster.models import FailedAttempt
 from django.shortcuts import render, redirect
 from django.db.models import Q
 #from book.classes.teste import ContactUsForm
-from book.forms import VooForm, VooStatusForm, DtIntervalForm
+from book.forms import VooForm, VooStatusForm, DtIntervalForm, VooUpdateForm, LoginForm
 from book.models import Voo, Funcionario
 
 # Create your views here.
@@ -10,10 +12,40 @@ def bookview(request):
     return render(request, "FIRST.html")
 
 def loginview(request):
-    return render(request, "login.html")
+    form = LoginForm()
+    isblocked = False
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('loginredirectview')
+        else:
+            isblocked = FailedAttempt.objects.filter(username=username)[0].blocked
+            return render(request, 'login.html', {'isblocked': isblocked, 'form': form})
+    else:
+        return render(request, 'login.html', {'isblocked': False, 'form': form})
     
 def crudview(request):
     return render(request, "crud.html")
+
+def loginredirectview(request):
+    if request.method == 'POST':
+        return redirect('accounts/login/')
+
+    if request.user.is_authenticated:
+        if request.user.groups.filter(name='monitoracao').exists():
+            return redirect('inicio_monit_view')
+        elif request.user.groups.filter(name='gerente').exists():
+            return redirect('inicio_gerente_view')
+        elif request.user.groups.filter(name='operador').exists():
+            return redirect('operadorview')
+        else:
+            return render(request, 'inicio-redireciona.html')
+    else:
+        return render(request, 'inicio-redireciona.html')
+
     
 def crudcreateview(request):
     if request.method == 'POST':
@@ -58,14 +90,14 @@ def crudupdateview(request, idVoo):
     voo  = Voo.objects.get(idVoo=idVoo)
 
     if request.method == 'POST':
-        form = VooForm(request.POST, instance=voo)
+        form = VooUpdateForm(request.POST, instance=voo)
 
         if form.is_valid():
             voo = form.save()
 
             return redirect('crud_read_specific_view', voo.idVoo)
     else:
-        form = VooForm(instance=voo)
+        form = VooUpdateForm(instance=voo)
 
     return render(request, "crud-update.html", {'form': form})
 
