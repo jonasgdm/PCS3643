@@ -136,10 +136,40 @@ def chegadas_gerado_view(request, dtInicio, dtFim):
     voosContidos = voos.filter(Q(chegadaReal__range=(dtInicio, dtFim)) | (Q(chegadaPrevista__range=(dtInicio, dtFim)) & Q(chegadaReal__isnull=True)))
     numVoos = voosContidos.count()
     return render(request, "chegadas-gerado.html", {'vooMostrar': voosContidos, 'numVoos': numVoos, 'dtInicio': dtInicio, 'dtFim':dtFim})
-    
-def painelview(request):
+
+def escolhaview(request):
     vooMostrar = Voo.objects.all()
-    return render(request, "painel.html", {'vooMostrar': vooMostrar})
+    aeroportos = []
+    portas = []
+    partida = vooMostrar.order_by('origem')
+    chegada = vooMostrar.order_by('destino')
+    anterior = None
+
+    for i in partida:
+        if i.origem == anterior:
+            pass
+        else:
+            aeroportos.append(i)
+
+        anterior = i.origem
+
+    anterior = None
+    for j in chegada:
+        if j.destino == anterior:
+            pass
+        else:
+            portas.append(j)
+        
+        anterior = j.destino
+        
+    return render(request, "escolha-aeroporto.html", {'aeroportos': aeroportos, 'portas': portas})
+
+def painelview(request, aeroporto):
+    voos = Voo.objects.all()
+    partidaMostrar = voos.filter(origem=aeroporto)
+    chegadaMostrar = voos.filter(destino=aeroporto)
+
+    return render(request, "painel.html", {'aeroporto': aeroporto, 'partidaMostrar': partidaMostrar, 'chegadaMostrar': chegadaMostrar})
 
 def monitoracaoview(request):
     vooMostrar = Voo.objects.all()

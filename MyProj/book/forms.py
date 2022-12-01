@@ -55,7 +55,10 @@ class VooStatusForm(forms.ModelForm):
         if statusVoo == 'Autorizado' and partidaReal != None:
             return datetime.now()
         else:
-            return partidaReal
+            if partidaReal == "":
+                return None
+            else:
+                return partidaReal
 
     def clean_chegadaReal(self):
         statusVoo = self.data.get('statusVoo')
@@ -63,7 +66,10 @@ class VooStatusForm(forms.ModelForm):
         if statusVoo == 'Aterrissado' and chegadaReal != None:
             return datetime.now()
         else:
-            return chegadaReal
+            if chegadaReal == "":
+                return None
+            else:
+                return chegadaReal
 
 
 

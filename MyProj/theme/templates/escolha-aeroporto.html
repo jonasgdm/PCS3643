@@ -9,7 +9,7 @@
     <body>
         <div class="container">
             <div class="row">
-                <h2>Atualização de Status de Voo</h2>
+                <h2>Monitoração de Voos</h2>
             <ul class="ds-btn">
                 <li>
                     <a class="btn btn-lg btn-info" href="{% url 'inicio_monit_view' %}">
@@ -19,12 +19,17 @@
             </div>
             {% block content %}
 
-            <h3>Voos Ativos</h3>
+            <h3>Aeroportos</h3>
 
             <ul>
-            {% for voo in vooMostrar %}
+            {% for voo in aeroportos %}
                 <li>
-                    {{voo}}: {{voo.statusVoo}} - {{voo.origem}} - {{voo.destino}} - {{voo.ultimaAtualizacao}} - <a href="{% url 'statusupdateview' voo.idVoo %}"><small>[atualizar]</small></a>
+                    <a href="{% url 'painelview' voo.origem %}"><small>{{voo.origem}}</small></a>
+                </li>
+            {% endfor %}
+            {% for voo in portas %}
+                <li>
+                    <a href="{% url 'painelview' voo.destino %}"><small>{{voo.destino}}</small></a>
                 </li>
             {% endfor %}
             </ul>

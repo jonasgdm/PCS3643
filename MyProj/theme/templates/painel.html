@@ -9,7 +9,7 @@
     <body>
         <div class="container">
             <div class="row">
-                <h2>Painel de Monitoração</h2>
+                <h2>{{aeroporto}}</h2>
             <ul class="ds-btn">
                 <li>
                     <a class="btn btn-lg btn-info" href="{% url 'inicio_monit_view' %}">
@@ -19,7 +19,7 @@
             </div>
             {% block content %}
 
-            <h3>Voos</h3>
+            <h3>Decolagens</h3>
 
             <div class="table">
             <table>
@@ -31,7 +31,8 @@
                     <th>Pouso</th>
                     <th>Status</th>
                 </tr>
-                {% for voo in vooMostrar %}
+                {% if partidaMostrar %}
+                {% for voo in partidaMostrar %}
                     <tr>
                         <td>{{voo}}</td>
                         <td>{{voo.companhiaAerea}}</td>
@@ -55,6 +56,48 @@
                         {% endif %}
                     </tr>
                 {% endfor %}
+                {% endif %}
+            </table>
+            </div>
+
+            <h3>Pousos</h3>
+
+            <div class="table">
+            <table>
+                <tr>
+                    <th>Voo</th>
+                    <th>Companhia Aérea</th>
+                    <th>Origem</th>
+                    <th>Decolagem</th>
+                    <th>Pouso</th>
+                    <th>Status</th>
+                </tr>
+                {% if chegadaMostrar %}
+                {% for voo in chegadaMostrar %}
+                    <tr>
+                        <td>{{voo}}</td>
+                        <td>{{voo.companhiaAerea}}</td>
+                        <td>{{voo.origem}}</td>
+                        {% if voo.chegadaReal %}
+                            <td>{{voo.partidaReal}}</td>
+                            <td>{{voo.chegadaReal}}</td>
+                        {% else %}
+                            {% if voo.partidaReal %}
+                                <td>{{voo.partidaReal}}</td>
+                                <td><i>{{voo.chegadaPrevista}}</i></td>
+                            {% else %}
+                                <td><i>{{voo.partidaPrevista}}</i></td>
+                                <td><i>{{voo.chegadaPrevista}}</i></td>
+                            {% endif %}
+                        {% endif %}
+                        {% if voo.statusVoo == 'Embarcando' %}
+                            <td><b>{{voo.statusVoo}}</b></td>
+                        {% else %}
+                            <td>{{voo.statusVoo}}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                {% endif %}
             </table>
             </div>
 
