@@ -84,9 +84,7 @@ Os testes de  de unidade podem ser rodados pelo mesmo comando da Aula 6:
 python manage.py test
 ```
 
-Já o conteudo implementado pode ser acessado pela lista [abaixo](#Templates), o conteúdo pode ser acessado diretamente pelos links. 
-
-### Atividade da aula 14
+Já o conteudo implementado pode ser acessado pela lista [abaixo](#Templates), o conteúdo pode ser acessado diretamente pelos links.
 
 ## Templates
 Pelas telas iniciais, abaixo, é possivel acessar as aplicações:
