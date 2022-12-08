@@ -2,6 +2,14 @@
 #### Jonas Gomes de Morais - 10893805
 #### Pedro Vitor Bacic - 11806934
 
+## Link do site na nuvem - jonasgm.pythonanywhere.com
+#### Usuários:
+- operador
+- funcionario
+- torre
+- gerente
+- piloto
+
 ## Atividades das demais aulas
 A documentação desenvolvida nas atividades das aulas está presente na pasta [`\Docs`](https://github.com/jonasgdm/PCS3643/tree/main/Docs) deste repositório.
 
@@ -77,6 +85,8 @@ python manage.py test
 ```
 
 Já o conteudo implementado pode ser acessado pela lista [abaixo](#Templates), o conteúdo pode ser acessado diretamente pelos links. 
+
+### Atividade da aula 14
 
 ## Templates
 Pelas telas iniciais, abaixo, é possivel acessar as aplicações:
