@@ -2,7 +2,7 @@
 #### Jonas Gomes de Morais - 10893805
 #### Pedro Vitor Bacic - 11806934
 
-## Link do site na nuvem - [jonasgm.pythonanywhere.com](jonasgm.pythonanywhere.com)
+## Link do site na nuvem - [jonasgm.pythonanywhere.com](https://jonasgm.pythonanywhere.com/)
 #### Usuários:
 - operador
 - funcionario
