@@ -3,9 +3,8 @@ from django.contrib.auth import authenticate, login
 from BruteBuster.models import FailedAttempt
 from django.shortcuts import render, redirect
 from django.db.models import Q
-#from book.classes.teste import ContactUsForm
 from book.forms import VooForm, VooStatusForm, DtIntervalForm, VooUpdateForm, LoginForm
-from book.models import Voo, Funcionario
+from book.models import Voo
 
 # Create your views here.
 def bookview(request):
@@ -120,7 +119,6 @@ def relatorioview(request):
     return render(request, "relatorio.html")
 
 def partidasview(request):
-    #voos = Voo.objects.all()
 
     if request.method == 'POST':
         form = DtIntervalForm(request.POST)
@@ -128,9 +126,6 @@ def partidasview(request):
         if form.is_valid():
             dtInicio = str(form.cleaned_data['dtInicio'])
             dtFim = str(form.cleaned_data['dtFim'])
-
-            #dtInicio = datetime.strptime(dtInicio, "%Y-%m-%d %H:%M:%S%z")
-            #dtFim = datetime.strptime(dtFim, "%Y-%m-%d %H:%M:%S%z")
             
             return redirect('partidas_gerado_view', dtInicio, dtFim)
     else:
@@ -139,7 +134,6 @@ def partidasview(request):
     return render(request, "relatorio-partidas.html", {'form': form})
 
 def chegadasview(request):
-    #voos = Voo.objects.all()
     
     if request.method == 'POST':
         form = DtIntervalForm(request.POST)
@@ -147,9 +141,6 @@ def chegadasview(request):
         if form.is_valid():
             dtInicio = str(form.cleaned_data['dtInicio'])
             dtFim = str(form.cleaned_data['dtFim'])
-
-            #dtInicio = datetime.strptime(dtInicio, "%Y-%m-%d %H:%M:%S%z")
-            #dtFim = datetime.strptime(dtFim, "%Y-%m-%d %H:%M:%S%z")
             
             return redirect('chegadas_gerado_view', dtInicio, dtFim)
     else:

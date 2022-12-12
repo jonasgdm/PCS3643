@@ -36,7 +36,6 @@ class Voo(models.Model):
     chegadaPrevista = models.DateTimeField(null=False, verbose_name='Pouso Previsto')
     chegadaReal = models.DateTimeField(null=True, blank=True, verbose_name='Pouso')
     statusVoo = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Confirmado", verbose_name='Status')
-    # TODO: Trocar o nome da variavel conexoes pra outro nome conforme comentario do prof
     conexoes = models.CharField(max_length=100, blank=True, verbose_name='Rota')
     ultimaAtualizacao= models.DateTimeField(auto_now=True, verbose_name='Última Alteração')
     class Meta:

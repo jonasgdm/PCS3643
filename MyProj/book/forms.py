@@ -8,8 +8,6 @@ class VooForm(forms.ModelForm):
     class Meta:
         model = Voo
         exclude = ('partidaReal', 'chegadaReal', 'statusVoo')
-        # fields = '__all__'
-        # widgets = {'idVoo'}
 
     def clean_conexoes(self):
         rota = self.data.get('conexoes')

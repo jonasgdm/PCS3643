@@ -19,7 +19,6 @@ from book import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path("accounts/", include("django.contrib.auth.urls")),
     path('FIRST', views.bookview),
     path('accounts/login/', views.loginview, name='loginview'),
     path('crud/', views.crudview, name='crudview'),
